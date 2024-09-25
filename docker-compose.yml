@@ -1,0 +1,35 @@
+version: "3.8"
+services:
+  messsages_in_assistants:
+    container_name: 'postgres_messsages_in_assistants'
+    image: postgres:15
+    command: postgres -c "max_connections=10000"
+    restart: unless-stopped
+    env_file:
+      - .env
+    environment:
+      - PGDATA=/var/lib/postgresql/data/pgdata
+    volumes:
+      - /home/izbushko/messsages_in_assistants:/var/lib/postgresql/data
+    networks:
+      - messsages_in_assistants_network
+    ports:
+      - ${POSTGRES_PORT_TO_LOCAL_HOST}:5432
+  messsages_in_assistants_app:
+    build: .
+    restart: unless-stopped
+    container_name: "messsages_in_assistants"
+    env_file:
+      - .env
+    ports:
+      - "${APP_PORT}:8787"
+    volumes:
+      - /home/izbushko/messsages_in_assistants_/messsages_in_assistants/logs:/app/logs
+    networks:
+      - messsages_in_assistants_network
+    depends_on:
+      - messsages_in_assistants
+      - pg_web
+networks:
+  messsages_in_assistants_network:
+    external: false
