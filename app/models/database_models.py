@@ -1,18 +1,26 @@
 import uuid
 from datetime import datetime
-from typing import Optional
+from typing import Optional, List
+
+from sqlalchemy import Column
 from sqlmodel import SQLModel, Field, DateTime
+from sqlalchemy.dialects.postgresql import JSON
 
 def get_uuid():
     return str(uuid.uuid4())
 
-class Message(SQLModel, table=True):
+class Contact(SQLModel, table=True):
 
-    id: Optional[str] = Field(default_factory=get_uuid, primary_key=True)
-    created_at: Optional[str] = Field(default_factory=datetime.now, sa_column_kwargs={"default": DateTime})
+    # id: Optional[str] = Field(default_factory=get_uuid, primary_key=True)
 
-    service_name: str = Field(nullable=False)
-    tg_nickname: Optional[str] = Field(nullable=False)
+    contact_id: str = Field(primary_key=True)
+    login_email: Optional[str] = Field(default=None, nullable=True)
+    tg_nickname: Optional[str] = Field(nullable=True)
 
-    role: Optional[str] = Field(nullable=True)
-    content: Optional[str] = Field(nullable=True)
+    threads: List[str] = Field(
+        sa_column=Column(JSON, nullable=False)
+    )
+
+
+
+

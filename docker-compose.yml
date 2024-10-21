@@ -1,4 +1,3 @@
-version: "3.8"
 services:
   messsages_in_assistants:
     container_name: 'postgres_messsages_in_assistants'
@@ -29,7 +28,6 @@ services:
       - messsages_in_assistants_network
     depends_on:
       - messsages_in_assistants
-      - pg_web
 networks:
   messsages_in_assistants_network:
     external: false

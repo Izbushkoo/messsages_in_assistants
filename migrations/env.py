@@ -28,6 +28,7 @@ sys.path.append(BASE_DIR)
 
 from sqlmodel import SQLModel
 from app.models.user import User
+from app.models.database_models import Contact
 
 target_metadata = SQLModel.metadata
 
@@ -42,8 +43,9 @@ def get_url():
     user = os.getenv("POSTGRES_USER", "izbushko")
     password = os.getenv("POSTGRES_PASSWORD", "slegka328doljanelegka")
     server = os.getenv(
-        "POSTGRES_SERVER", "messsages_in_assistants"
-    ) + ":" + os.getenv("POSTGRES_PORT_TO_LOCAL_HOST", "5678")
+        "POSTGRES_SERVER", "localhost"
+    # ) + ":5432"
+    ) + ":5678"
     db = os.getenv("POSTGRES_DB", "postgres")
     return f"postgresql://{user}:{password}@{server}/{db}"
 
