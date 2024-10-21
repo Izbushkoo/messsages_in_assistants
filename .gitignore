@@ -326,3 +326,4 @@ messsages_in_assistants/media/
 
 .ipython/
 .env
+docker-compose.yml
